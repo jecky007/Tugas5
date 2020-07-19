@@ -1,26 +1,26 @@
 package com.exercises.tugas1.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="user")
-
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
+    String username;
+    String email;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    String name;
+    String password;
 
-int id;
-String username;
-String email;
-String name;
-String password;
-
-@ElementCollection
-
-    private List<String> roles= new ArrayList<>();
-boolean active;
+    @ElementCollection
+    public List<String> roles = new ArrayList<>();
+    boolean active;
 
     public int getId() {
         return id;
@@ -87,4 +87,21 @@ boolean active;
         this.roles = roles;
         this.active = active;
     }
+
+    public User() {
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", roles=" + roles +
+                ", active=" + active +
+                '}';
+    }
+
 }
