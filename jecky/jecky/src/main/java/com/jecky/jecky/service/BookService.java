@@ -1,9 +1,7 @@
 package com.jecky.jecky.service;
 
-import com.jecky.jecky.model.Address;
 import com.jecky.jecky.model.Book;
 import com.jecky.jecky.model.BookCategory;
-import com.jecky.jecky.model.User;
 import com.jecky.jecky.repository.BookCategoryRepository;
 import com.jecky.jecky.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,21 +19,8 @@ public class BookService {
     @Autowired
     BookCategoryRepository bookcategoryrepository;
 
-    public Map<String, Object> insertBook(Book body) {
-        Book book;
-        Map<String, Object> resultMap = new HashMap<>();
-        try {
-
-            bookrepository.save(body);
-            //insert address
-
-            resultMap.put("success", true);
-            resultMap.put("message", "berhasil insert book category");
-        } catch (Exception e) {
-            resultMap.put("success", false);
-            resultMap.put("message", "gagal insert book category" + e.getMessage());
-        }
-        return resultMap;
+    public List<Book> findAll() {
+        return bookrepository.findAll();
     }
 
     public boolean deleteByBookId(int bookId) {
@@ -82,11 +67,20 @@ public class BookService {
         return resultMap;
     }
 
-    public List<Book> getAllBookByTitle(String title) {
-        return bookrepository.findByTitleContaining(title);
-    }
+//    public List<Book> getAllBookByTitle(String title) {
+//        return bookrepository.findByTitleContaining(title);
+//    }
+//
+//    public List<Book> getAllBookByCategory(int id) {
+//        return bookrepository.findBycategoryidContaining(id);
+//    }
 
-    public List<Book> getAllBookByCategory(int id) {
-        return bookrepository.findBycategoryidContaining(id);
+    public boolean insertBook(Book body) {
+        try {
+            bookrepository.save(body);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 }

@@ -27,8 +27,6 @@ public class Book {
         this.bookCategory = bookCategory;
     }
 
-    public Book() {
-    }
 
     public int getId() {
         return id;

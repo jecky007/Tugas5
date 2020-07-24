@@ -17,7 +17,10 @@ public class BookController {
     @Autowired
     BookRepository bookRepository;
     BookService bookService;
-
+    @GetMapping("")
+    List<Book> getAllBook(){
+        return bookRepository.findAll();
+    }
 
     @DeleteMapping("/delete")
     Map<String, Object> deleteById(@RequestParam int id) {
@@ -44,21 +47,29 @@ public class BookController {
         return result;
     }
 
-    @PostMapping("/insert")
-    public Map insertBook(@RequestBody Book book) {
-        return bookService.insertBook(book);
+@PostMapping("/insert")
+public Map<String,Object> addNewBook(@RequestBody Book body){
+    Map<String ,Object> result = new HashMap<>();
+    if (bookService.insertBook(body)){
+        result.put("success", true);
+        result.put("message","book berhasil ditambahkan");
+    }else {
+        result.put("successs",false);
+        result.put("message","book gagal ditambahkan");
     }
+    return result;
+}
 
 
-    @GetMapping("/byTitle")
-    public List<Book> getUsersByTitle(@RequestParam(required = false) String title) {
-        return bookService.getAllBookByTitle(title);
-    }
-
-    @GetMapping("/byCategory")
-    public List<Book> getUsersByCategory(@RequestParam(required = false) int id) {
-        return bookService.getAllBookByCategory(id);
-    }
+//    @GetMapping("/byTitle")
+//    public List<Book> getUsersByTitle(@RequestParam(required = false) String title) {
+//        return bookService.getAllBookByTitle(title);
+//    }
+//
+//    @GetMapping("/byCategory")
+//    public List<Book> getUsersByCategory(@RequestParam(required = false) int id) {
+//        return bookService.getAllBookByCategory(id);
+//    }
 
 
 }

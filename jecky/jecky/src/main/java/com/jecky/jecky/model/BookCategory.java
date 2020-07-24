@@ -3,7 +3,7 @@ package com.jecky.jecky.model;
 import javax.persistence.*;
 
 @Entity
-@Table()
+@Table(name="bookcategory")
 public class BookCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,14 +11,9 @@ public class BookCategory {
     private int id;
     private String name;
 
-    public BookCategory() {
-    }
+//    @OneToMany(mappedBy = "bookcategory", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 
 
-    public BookCategory(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public int getId() {
         return id;

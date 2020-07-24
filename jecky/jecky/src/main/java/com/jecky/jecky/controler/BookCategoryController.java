@@ -1,6 +1,6 @@
 package com.jecky.jecky.controler;
 
-import com.jecky.jecky.model.Book;
+
 import com.jecky.jecky.model.BookCategory;
 import com.jecky.jecky.service.BookCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
