@@ -14,19 +14,22 @@ public class Book {
     private String title;
     private String writer;
     private int year;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name="categoryid")
     private BookCategory bookCategory;
 
-    public BookCategory getBookCategory() {
-        return bookCategory;
+    public Book() {
     }
 
-    public void setBookCategory(BookCategory bookCategory) {
+    public Book(int id, int price, String publisher, String title, String writer, int year, BookCategory bookCategory) {
+        this.id = id;
+        this.price = price;
+        this.publisher = publisher;
+        this.title = title;
+        this.writer = writer;
+        this.year = year;
         this.bookCategory = bookCategory;
     }
-
 
     public int getId() {
         return id;
@@ -74,5 +77,13 @@ public class Book {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public BookCategory getBookCategory() {
+        return bookCategory;
+    }
+
+    public void setBookCategory(BookCategory bookCategory) {
+        this.bookCategory = bookCategory;
     }
 }

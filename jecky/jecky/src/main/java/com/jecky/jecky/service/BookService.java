@@ -67,13 +67,13 @@ public class BookService {
         return resultMap;
     }
 
-//    public List<Book> getAllBookByTitle(String title) {
-//        return bookrepository.findByTitleContaining(title);
-//    }
-//
-//    public List<Book> getAllBookByCategory(int id) {
-//        return bookrepository.findBycategoryidContaining(id);
-//    }
+    public List<Book> getAllBookByTitle(String title) {
+        return bookrepository.findByTitleContaining(title);
+    }
+
+    public List<Book> getAllBookByCategory(int id) {
+        return bookrepository.findBycategoryidContaining(id);
+    }
 
     public boolean saveBook(Book body) {
 

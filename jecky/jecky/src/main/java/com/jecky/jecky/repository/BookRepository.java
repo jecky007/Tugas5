@@ -11,9 +11,9 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, String> {
     Book findById(int id);
-//    Page<Book> findByTitleContaining(String search, Pageable pageable);
-//    List<Book> findByTitleContaining(String title);
-//
-//    @Query(value = "SELECT * FROM book WHERE categoryid = :id ", nativeQuery = true)
-//    List<Book>  findBycategoryidContaining(@Param("id") int id);
+    Page<Book> findByTitleContaining(String search, Pageable pageable);
+    List<Book> findByTitleContaining(String title);
+
+    @Query(value = "SELECT * FROM book WHERE categoryid = :id ", nativeQuery = true)
+    List<Book>  findBycategoryidContaining(@Param("id") int id);
 }

@@ -3,7 +3,7 @@ package com.jecky.jecky.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="bookcategory")
+@Table(name="bookCategory")
 public class BookCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,14 @@ public class BookCategory {
     }
 
     public void setName(String name) {
+        this.name = name;
+    }
+
+    public BookCategory() {
+    }
+
+    public BookCategory(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 }
