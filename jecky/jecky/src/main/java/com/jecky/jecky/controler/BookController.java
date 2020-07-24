@@ -16,6 +16,7 @@ import java.util.Map;
 public class BookController {
     @Autowired
     BookRepository bookRepository;
+   @Autowired
     BookService bookService;
     @GetMapping("")
     List<Book> getAllBook(){
@@ -50,7 +51,7 @@ public class BookController {
 @PostMapping("/insert")
 public Map<String,Object> addNewBook(@RequestBody Book body){
     Map<String ,Object> result = new HashMap<>();
-    if (bookService.insertBook(body)){
+    if (bookService.saveBook(body)){
         result.put("success", true);
         result.put("message","book berhasil ditambahkan");
     }else {

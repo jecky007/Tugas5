@@ -75,12 +75,14 @@ public class BookService {
 //        return bookrepository.findBycategoryidContaining(id);
 //    }
 
-    public boolean insertBook(Book body) {
+    public boolean saveBook(Book body) {
+
         try {
             bookrepository.save(body);
             return true;
-        } catch (Exception e){
+        }catch (Exception e){
             return false;
         }
     }
+
 }
