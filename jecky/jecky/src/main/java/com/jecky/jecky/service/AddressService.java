@@ -1,6 +1,7 @@
 package com.jecky.jecky.service;
 
 import com.jecky.jecky.model.Address;
+import com.jecky.jecky.model.Book;
 import com.jecky.jecky.model.User;
 import com.jecky.jecky.repository.AddressRepository;
 import com.jecky.jecky.repository.UserRepository;
@@ -20,47 +21,8 @@ public class AddressService {
     @Autowired
     UserRepository userRepository;
 
-    public List<Address> getAllAddress() {
+    public List<Address> getAllAddress(Integer pageNo, String sortKey) {
         return addressRepository.findAll();
-    }
-
-    public Map insertAddress(Address address, int id) {
-        User user = userRepository.findById(id);
-        Map<String, Object> mapResult = new HashMap<>();
-
-        if (user != null) {
-            address.setUser(user);
-            try {
-                addressRepository.save(address);
-                mapResult.put("success", true);
-                mapResult.put("message", "berhasil insert address");
-            } catch (Exception e) {
-                mapResult.put("success", false);
-                mapResult.put("message", "gagal insert address: " + e.getMessage());
-            }
-        }
-        return mapResult;
-    }
-
-    public Map updateAddress(Address body, int id) {
-        Address result = addressRepository.findById(id);
-        Map<String, Object> resultMap = new HashMap<>();
-
-        if (result != null) {
-            try {
-                addressRepository.save(body);
-                resultMap.put("success", true);
-                resultMap.put("message", "berhasil edit address");
-            } catch (Exception e) {
-                resultMap.put("success", false);
-                resultMap.put("message", "gagal edit address: " + e.getMessage());
-            }
-        } else {
-            resultMap.put("success", false);
-            resultMap.put("message", "gagal edit address");
-        }
-
-        return resultMap;
     }
 
     public Map<String, Object> getAddressById(int userId) {
@@ -76,24 +38,21 @@ public class AddressService {
         return resultMap;
     }
 
-    public Map deleteByUserId(int userId) {
-        Address result = addressRepository.findById(userId);
-        Map<String, Object> resultMap = new HashMap<>();
+    public boolean deleteByAddressId(int addressId) {
+        Address result = addressRepository.findById(addressId);
+
         if (result != null) {
             try {
-                addressRepository.deleteById(userId);
-                resultMap.put("success", true);
-                resultMap.put("message", "address berhasil terhapus");
+                addressRepository.deleteById(addressId);
+                return true;
             } catch (Exception e) {
-                resultMap.put("success", false);
-                resultMap.put("record", "address gagal terhapus: " + e.getMessage());
+                return false;
             }
         } else {
-            resultMap.put("success", false);
-            resultMap.put("record", "address gagal terhapus");
+            return false;
         }
-        return resultMap;
     }
+
 
     //get by type
     public List<Address> getAddressByType(String search, String type) {
@@ -110,5 +69,39 @@ public class AddressService {
         }
     }
 
+    public Map insertAddress(Address address) {
+        Map<String, Object> mapResult = new HashMap<>();
 
+        if (address != null) {
+
+            try {
+                addressRepository.save(address);
+                mapResult.put("success", true);
+                mapResult.put("message", "berhasil insert address");
+            } catch (Exception e) {
+                mapResult.put("success", false);
+                mapResult.put("message", "gagal insert address: " + e.getMessage());
+            }
+        }
+        return mapResult;
+    }
+
+
+
+    public boolean updateAddress(Address body) {
+        Address userResult = addressRepository.findById(body.getId());
+
+        if (userResult != null) {
+            try {
+//
+                addressRepository.save(body);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+    }
 }

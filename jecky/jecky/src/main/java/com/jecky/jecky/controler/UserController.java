@@ -22,13 +22,7 @@ import java.util.Map;
 public class UserController {
     @Autowired
     UserService service;
-//    @Autowired
-//    UserRepository userRepository;
 
-//    @GetMapping("")
-//    List<User> getAllUser() {
-//        return service.getAllUser();
-//    }
 
     @GetMapping
     public List<User> getAllUser(@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
