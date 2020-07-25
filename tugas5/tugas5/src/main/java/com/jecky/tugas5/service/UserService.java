@@ -3,6 +3,10 @@ package com.jecky.tugas5.service;
 import com.jecky.tugas5.model.User;
 import com.jecky.tugas5.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -19,23 +23,28 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User findByuserId(int id) {
-        return userRepository.findById(id);
+    public List<User> getAllUser(Integer pageNo, String sortKey){
+        int noOfRecord = 2;
+        Pageable page = PageRequest.of(pageNo, noOfRecord, Sort.by(sortKey));
+        Page<User> pagedResult = userRepository.findAll(page);
+        return pagedResult.getContent();
     }
 
-    public boolean hapusData(int id) {
-        User result = userRepository.findById(id);
+    public boolean Delete(String id) {
+        User result = userRepository.deleteByid(id);
         if (result != null) {
             try {
                 userRepository.delete(result);
                 return true;
-            } catch (Exception E) {
+            } catch (Exception e) {
                 return false;
             }
+
         } else {
             return false;
         }
     }
+
 
     public boolean updateUser(User body) {
         Optional<User> userResult = userRepository.findById(body.getId());

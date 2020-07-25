@@ -18,13 +18,17 @@ public class UserController {
     @Autowired
     UserRepository repo;
 
-    @GetMapping("")
-    List<User> getUSer(){return repo.findAll();}
+
+    @GetMapping
+    public List<User> getAllUser(@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+                                 @RequestParam(value = "sortKey", defaultValue = "name") String sortKey) {
+        return service.getAllUser(pageNo, sortKey);
+    }
 
     @DeleteMapping("/delete")
-    Map<String, Object> hapusdata(@RequestParam int id) {
+    Map<String, Object> hapusdata(@RequestParam String id) {
         Map<String, Object> result = new HashMap<>();
-        if (service.hapusData(id)) {
+        if (service.Delete(id)) {
             result.put("success", true);
         } else {
             result.put("success", false);
