@@ -1,6 +1,8 @@
 package com.jecky.tugas5.service;
 
+import com.jecky.tugas5.model.Item;
 import com.jecky.tugas5.model.User;
+import com.jecky.tugas5.repository.ItemRepository;
 import com.jecky.tugas5.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,26 +17,26 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class ItemService {
     @Autowired
-    UserRepository userRepository;
+    ItemRepository itemRepository;
 
-    public List<User> getAllUser() {
-        return userRepository.findAll();
+    public List<Item> getAllUser() {
+        return itemRepository.findAll();
     }
 
-    public List<User> getAllUser(Integer pageNo, String sortKey){
+    public List<Item> getAllUser(Integer pageNo, String sortKey){
         int noOfRecord = 1;
         Pageable page = PageRequest.of(pageNo, noOfRecord, Sort.by(sortKey));
-        Page<User> pagedResult = userRepository.findAll(page);
+        Page<Item> pagedResult = itemRepository.findAll(page);
         return pagedResult.getContent();
     }
 
     public boolean Delete(String id) {
-        User result = userRepository.deleteByid(id);
+        Item result = itemRepository.deleteByid(id);
         if (result != null) {
             try {
-                userRepository.delete(result);
+                itemRepository.delete(result);
                 return true;
             } catch (Exception e) {
                 return false;
@@ -45,14 +47,13 @@ public class UserService {
         }
     }
 
+    public boolean updateItem(Item body) {
+        Optional<Item> itemResult = itemRepository.findById(body.getId());
 
-    public boolean updateUser(User body) {
-        Optional<User> userResult = userRepository.findById(body.getId());
-
-        if (userResult != null) {
+        if (itemResult != null) {
             try {
 //
-                userRepository.save(body);
+                itemRepository.save(body);
                 return true;
             } catch (Exception e) {
                 return false;
@@ -63,11 +64,10 @@ public class UserService {
 
     }
 
-
-    public Map<String, Object> insert(User user) {
+    public Map<String, Object> insert(Item item) {
         Map<String, Object>result = new HashMap<>();
         try {
-            userRepository.save(user);
+            itemRepository.save(item);
             result.put("success",true);
             result.put("mes","berhasil");
         }catch (Exception e){
@@ -76,9 +76,5 @@ public class UserService {
         }
         return result;
     }
-//    private void insertUser(User user){
-//        System.out.println();
-//        userRepository.save(user);
-//    }
 
 }

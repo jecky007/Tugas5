@@ -1,10 +1,10 @@
 package com.jecky.tugas5.controller;
 
+import com.jecky.tugas5.model.Item;
 import com.jecky.tugas5.model.User;
-import com.jecky.tugas5.repository.UserRepository;
-import com.jecky.tugas5.service.UserService;
+import com.jecky.tugas5.repository.ItemRepository;
+import com.jecky.tugas5.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -12,24 +12,15 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/user")
-public class UserController {
+@RequestMapping("api/item")
+public class ItemController {
     @Autowired
-    UserService service;
+    ItemService service;
     @Autowired
-    UserRepository repo;
-//
-//    private MongoTemplate mongoTemplate;
-//    public List findAll () {
-//        return mongoTemplate.findAll(User.class);
-//    }
+    ItemRepository repo;
 
-    @GetMapping("")
-    public List<User> findAll(){
-        return repo.findAll();
-    }
-    @GetMapping("/ambil")
-    public List<User> getAllUser(@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+    @GetMapping
+    public List<Item> getAllUser(@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
                                  @RequestParam(value = "sortKey", defaultValue = "name") String sortKey) {
         return service.getAllUser(pageNo, sortKey);
     }
@@ -46,9 +37,9 @@ public class UserController {
         return result;
     }
     @PutMapping("/update")
-    Map<String, Object> UpdateUser(@RequestBody User body) {
+    Map<String, Object> UpdateItem(@RequestBody Item body) {
         Map<String, Object> result = new HashMap<>();
-        if (service.updateUser(body)) {
+        if (service.updateItem(body)) {
             result.put("success", true);
             result.put("mes", "berhasil");
         } else {
@@ -59,14 +50,9 @@ public class UserController {
     }
     @PostMapping("/insert")
 
-    public Map<String, Object> insert(@RequestBody User user) {
-        return service.insert(user);
+    public Map<String, Object> insert(@RequestBody Item item) {
+        return service.insert(item);
     }
 
 
-//    @PostMapping("/detaluser")
-//    public User insertUser(@RequestBody User body) {
-//        User result =repo.save(body);
-//        return result;
-//    }
 }
